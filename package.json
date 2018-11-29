@@ -5,9 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
     "test": "standard && mocha --exit",
-    "dev:start": "nodemon index.js"
+    "dev:start": "nodemon app.js"
   },
   "contributors": [
     "Gianluca Bonifazi <info.gianlucabonifazi@gmail.com> (http://biuni.it)",
