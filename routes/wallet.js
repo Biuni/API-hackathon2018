@@ -1,7 +1,6 @@
 const express = require('express')
 const db = require('../utils/db')
 const promisify = require('../utils/promisify')
-const global = require('../utils/global')
 
 const router = express.Router()
 
@@ -40,7 +39,7 @@ router.get('/transaction/:token', (req, res, next) => {
       }
       res.json({
         status: error,
-        message: (error == 1) ? null : msgerr,
+        message: (error === 1) ? null : msgerr,
         result: {
           credit: total,
           transaction: allTransaction
@@ -83,4 +82,5 @@ router.post('/buy', (req, res, next) => {
       })
     })
 })
+
 module.exports = router
