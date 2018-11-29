@@ -33,4 +33,21 @@ router.post('/', (req, res, next) => {
   })
 })
 
+/**
+ * @api - {POST} - /localization/check/:token - Link user and trash
+ * @apiName - CheckUserLocalize
+ * @apiGroup - Localization
+ *
+ * @apiParam - {String} user  - User token.
+ */
+router.get('/check/:token', (req, res, next) => {
+  db.query('SELECT COUNT(*) AS associated FROM `localization` WHERE `in_use` = 1', [req.params.token], (error, results, fields) => {
+    res.json({
+      status: (error) ? 0 : 1,
+      message: (error) ? `Error! ${error.sqlMessage}` : null,
+      result: (results[0].associated > 0) ? 1 : 0
+    })
+  })
+})
+
 module.exports = router

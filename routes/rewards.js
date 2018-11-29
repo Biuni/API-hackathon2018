@@ -26,25 +26,29 @@ router.post('/', (req, res, next) => {
     }).then(userId => {
 
       let credit = 0
+      let prodType = 0
       switch (req.body.product_type) {
         // Vetro
         case '0':
           credit = 20
+          prodType = 2
           break;
         // Carta
         case '1':
           credit = 5
+          prodType = 3
           break;
         // Plastica
         case '2':
           credit = 10
+          prodType = 1
           break;
       }
 
       var newTransaction = {
         id_user: userId[0].id_user,
         credit: credit,
-        product_id: req.body.product_type,
+        product_id: prodType,
         trash_token: req.body.trash_token
       }
       db.query('INSERT INTO `transaction` SET ?', newTransaction, (error, results, fields) => {

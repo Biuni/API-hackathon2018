@@ -28,7 +28,8 @@ router.post('/login', (req, res, next) => {
       if (userId[0] == undefined) {
         return res.json({
           status: 401,
-          message: 'Wrong email or password!'
+          message: 'Wrong email or password!',
+          result: []
         })
       } else {
         user_id = userId[0].id
@@ -40,7 +41,7 @@ router.post('/login', (req, res, next) => {
       if (wasLoggedBefore[0].count > 0) {
         db.query('UPDATE `logged` SET `token` = ?, `timestamp` = ? WHERE `id_user` = ?', [newToken, timeStamp, user_id], (error, results, fields) => {
           res.json({
-            status: (error) ? 401 : 200,
+            status: (error) ? 500 : 200,
             message: (error) ? `Error! ${error.sqlMessage}` : null,
             result: (error) ? `Token not setted!` : newToken
           })
@@ -48,7 +49,7 @@ router.post('/login', (req, res, next) => {
       } else {
         db.query('INSERT INTO `logged` SET `token` = ?, `timestamp` = ?, `id_user` = ?', [newToken, timeStamp, user_id], (error, results, fields) => {
           res.json({
-            status: (error) ? 401 : 200,
+            status: (error) ? 500 : 200,
             message: (error) ? `Error! ${error.sqlMessage}` : null,
             result: (error) ? `Token not setted!` : newToken
           })
