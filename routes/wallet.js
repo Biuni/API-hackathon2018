@@ -6,7 +6,7 @@ const global = require('../utils/global')
 const router = express.Router()
 
 /**
- * @api - {GET} - /wallet - Get transaction of user
+ * @api - {GET} - /wallet/transaction/:token - Get transaction of user
  * @apiName - TransactionUser
  * @apiGroup - Wallet
  *
