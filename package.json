@@ -1,0 +1,49 @@
+{
+  "name": "api-hackathon2018",
+  "version": "1.0.0",
+  "description": "RESTful API used by UnivPM Hackathon 2018.",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "standard && mocha --exit",
+    "dev:start": "nodemon index.js"
+  },
+  "contributors": [
+    "Gianluca Bonifazi <info.gianlucabonifazi@gmail.com> (http://biuni.it)",
+    "Federico Simonetti <federicosimonetti94@gmail.com>",
+    "Niccolò Marini <niccolo8marini@gmail.com>",
+    "Luca Mazzieri <luke.mazzieri@gmail.com>",
+    "Simone Accattoli <accattoli.simone@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Biuni/API-hackathon2018.git"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "moment": "^2.22.1",
+    "mysql": "^2.15.0",
+    "pretty-hrtime": "^1.0.3",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "husky": "^1.0.0-rc.2",
+    "mocha": "^5.1.1",
+    "nodemon": "^1.17.3",
+    "standard": "^11.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test",
+      "pre-push": "npm run test"
+    }
+  },
+  "engines": {
+    "node": ">=6.5.0"
+  }
+}
