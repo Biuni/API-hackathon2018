@@ -11,6 +11,7 @@ const localization = require('./routes/localization')
 const wallet = require('./routes/wallet')
 const products = require('./routes/products')
 const rewards = require('./routes/rewards')
+const user = require('./routes/user')
 const notfound = require('./routes/notfound')
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -22,6 +23,7 @@ app.use('/localization', localization)
 app.use('/wallet', wallet)
 app.use('/products', products)
 app.use('/rewards', rewards)
+app.use('/user', user)
 app.use(notfound)
 
 app.listen(port, hostname, () => {
