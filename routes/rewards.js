@@ -61,11 +61,11 @@ router.post('/', (req, res, next) => {
     })
 })
 /**
- * @api - {POST} - /rewards/close - Close the trash association
+ * @api - {GET} - /rewards/close - Close the trash association
  * @apiName - RewardClose
  * @apiGroup - Rewards
  *
- * @apiParam - {String} trash_token   - Trash's token.
+ * @apiParam - {String} trash_token - Trash's token.
  */
 router.get('/close/:trash_token', (req, res, next) => {
   promisify.query('SELECT `id` FROM `localization` WHERE `trash_token` = ? AND in_use = 1', [req.params.trash_token])

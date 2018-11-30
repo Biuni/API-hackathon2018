@@ -9,7 +9,7 @@ const router = express.Router()
 /**
  * @api - {POST} - /user/login - Login an user
  * @apiName - UserLogin
- * @apiGroup - Login
+ * @apiGroup - User
  *
  * @apiParam - {String} username - User email.
  * @apiParam - {String} password - User password.
@@ -56,6 +56,35 @@ router.post('/login', (req, res, next) => {
         })
       }
     })
+})
+
+/**
+ * @api - {POST} - /user/register - Register an user
+ * @apiName - UserRegister
+ * @apiGroup - User
+ *
+ * @apiParam - {String} email     - User email.
+ * @apiParam - {String} password  - User password.
+ * @apiParam - {String} name      - User name.
+ * @apiParam - {String} surname   - User surname.
+ */
+router.post('/register', (req, res, next) => {
+  if (req.body.email === '' || req.body.email === undefined ||
+    req.body.password === '' || req.body.password === undefined ||
+    req.body.name === '' || req.body.name === undefined ||
+    req.body.surname === '' || req.body.surname === undefined) {
+    return res.json({
+      status: 0,
+      message: 'Error. Try again!'
+    })
+  }
+  db.query('INSERT INTO `user` SET `email` = ?, `password` = ?, `name` = ?, `surname` = ?', [req.body.email, req.body.password, req.body.name, req.body.surname], (error, results, fields) => {
+    res.json({
+      status: (error) ? 409 : 200,
+      message: (error) ? `Error! User already registered!` : null,
+      result: (error) ? `User not registerd!` : `User registered!` 
+    })
+  })
 })
 
 module.exports = router
