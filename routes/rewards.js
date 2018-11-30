@@ -24,7 +24,6 @@ router.post('/', (req, res, next) => {
     .then(userToken => {
       return promisify.query('SELECT `id_user` FROM `logged` WHERE `token` = ?', [userToken[0].user_token])
     }).then(userId => {
-
       let credit = 0
       let prodType = 0
       switch (req.body.product_type) {
@@ -32,17 +31,17 @@ router.post('/', (req, res, next) => {
         case '0':
           credit = 20
           prodType = 2
-          break;
+          break
         // Carta
         case '1':
           credit = 5
           prodType = 3
-          break;
+          break
         // Plastica
         case '2':
           credit = 10
           prodType = 1
-          break;
+          break
       }
 
       var newTransaction = {

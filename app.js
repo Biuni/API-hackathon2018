@@ -27,7 +27,7 @@ app.use('/user', user)
 app.use(notfound)
 
 app.listen(port, hostname, () => {
-  console.log(`Live on => ${hostname}\n`)
+  console.log(`Server online on => ${hostname}\n`)
 })
 
 module.exports = app

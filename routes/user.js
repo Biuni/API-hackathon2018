@@ -22,24 +22,24 @@ router.post('/login', (req, res, next) => {
       message: 'Error. Try again!'
     })
   }
-  let user_id
+  let userIdentifier
   promisify.query('SELECT `id` FROM `user` WHERE `email` = ? AND `password` = ?', [req.body.username, req.body.password])
     .then(userId => {
-      if (userId[0] == undefined) {
+      if (userId[0] === undefined) {
         return res.json({
           status: 401,
           message: 'Wrong email or password!',
           result: []
         })
       } else {
-        user_id = userId[0].id
-        return promisify.query('SELECT COUNT(`token`) AS count FROM `logged` WHERE `id_user` = ?', [user_id])
+        userIdentifier = userId[0].id
+        return promisify.query('SELECT COUNT(`token`) AS count FROM `logged` WHERE `id_user` = ?', [userIdentifier])
       }
     }).then(wasLoggedBefore => {
       const timeStamp = moment().utc().format('YYYY-MM-DD HH:mm:ss')
       const newToken = crypto.createHash('md5').update(timeStamp).digest('hex')
       if (wasLoggedBefore[0].count > 0) {
-        db.query('UPDATE `logged` SET `token` = ?, `timestamp` = ? WHERE `id_user` = ?', [newToken, timeStamp, user_id], (error, results, fields) => {
+        db.query('UPDATE `logged` SET `token` = ?, `timestamp` = ? WHERE `id_user` = ?', [newToken, timeStamp, userIdentifier], (error, results, fields) => {
           res.json({
             status: (error) ? 500 : 200,
             message: (error) ? `Error! ${error.sqlMessage}` : null,
@@ -47,7 +47,7 @@ router.post('/login', (req, res, next) => {
           })
         })
       } else {
-        db.query('INSERT INTO `logged` SET `token` = ?, `timestamp` = ?, `id_user` = ?', [newToken, timeStamp, user_id], (error, results, fields) => {
+        db.query('INSERT INTO `logged` SET `token` = ?, `timestamp` = ?, `id_user` = ?', [newToken, timeStamp, userIdentifier], (error, results, fields) => {
           res.json({
             status: (error) ? 500 : 200,
             message: (error) ? `Error! ${error.sqlMessage}` : null,
@@ -82,7 +82,7 @@ router.post('/register', (req, res, next) => {
     res.json({
       status: (error) ? 409 : 200,
       message: (error) ? `Error! User already registered!` : null,
-      result: (error) ? `User not registerd!` : `User registered!` 
+      result: (error) ? `User not registerd!` : `User registered!`
     })
   })
 })
